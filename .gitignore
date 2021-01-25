@@ -1,1 +1,9 @@
 Library/
+Assembly-CSharp.csproj
+Logs/
+Packages/
+Platformer.sln
+ProjectSettings/
+Temp/
+UserSettings/
+ojb/
