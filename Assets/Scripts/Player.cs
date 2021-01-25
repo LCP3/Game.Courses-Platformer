@@ -9,5 +9,12 @@ public class Player : MonoBehaviour
         var horizontal = Input.GetAxis("Horizontal") * _speed; //Axis case-sensitive, goes from -1 to 1 from left to right, middle/resting is 0
         var rigidbody2d = GetComponent<Rigidbody2D>();
         rigidbody2d.velocity = new Vector2(horizontal, rigidbody2d.velocity.y);
+
+        var animator = GetComponent<Animator>(); //Get the Animator component
+        bool walking = horizontal != 0;
+        animator.SetBool("Walk", walking);
+
+
+
     }
 }
