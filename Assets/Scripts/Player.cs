@@ -4,6 +4,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] float _speed = 1;
     [SerializeField] float _jumpStrength = 200;
+    Vector3 _startPosition;
+
+    void Start()
+    {
+        _startPosition = transform.position;
+    }
 
     void Update()
     {
@@ -29,5 +35,10 @@ public class Player : MonoBehaviour
             rigidbody2d.AddForce(Vector2.up * _jumpStrength);
         }
 
+    }
+
+    internal void ResetToStart() //Internal means we can call this method from outside their own script (basically same as public)
+    {
+        transform.position = _startPosition;
     }
 }
