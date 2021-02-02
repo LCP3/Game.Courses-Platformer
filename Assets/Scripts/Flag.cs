@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,7 +20,15 @@ public class Flag : MonoBehaviour
         var animator = GetComponent<Animator>(); //Get the Animator
         animator.SetTrigger("Raise"); //Trigger the Raise animation
 
+        StartCoroutine(LoadLevelAfterDelay());
+        
+    }
+
+    IEnumerator LoadLevelAfterDelay()
+    {
+        yield return new WaitForSeconds(1f); //yield return for IEnumerator return syntax
         //Load new level
         SceneManager.LoadScene(_sceneName);
+        //Worth noting code beyond this line won't actually function.  Loading a new scene with a new flag (or other code)
     }
 }
