@@ -51,8 +51,9 @@ public class Player : MonoBehaviour
             _fallTimer = 0; //Reset the fall timer
             _jumpTimer = 0; //Reset jump timer
         }
-        else if (Input.GetButton("Fire1") && _jumpTimer <= _maxJumpDuration && _jumpsRemaining > 0) { //If Jump is held
+        else if (Input.GetButton("Fire1") && _jumpTimer <= _maxJumpDuration) { //If Jump is held
             rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, _jumpVelocity); //Add Y velocity Vector2(x,y)
+           // _jumpsRemaining--; //Decrease jump count
             _fallTimer = 0; //Reset the fall timer
             _jumpTimer += Time.deltaTime;
         }
