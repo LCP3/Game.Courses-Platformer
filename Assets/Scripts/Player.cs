@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        _startPosition = transform.position;
-        _jumpsRemaining = _maxJumps;
+        _startPosition = transform.position; //Set starting position
+        _jumpsRemaining = _maxJumps; //Initialize jump count
     }
 
     void Update()
@@ -42,11 +42,10 @@ public class Player : MonoBehaviour
 
         if (horizontal != 0) {
             var spriteRenderer = GetComponent<SpriteRenderer>(); //Get the Sprite Renderer component
-            spriteRenderer.flipX = horizontal < 0; //            
+            spriteRenderer.flipX = horizontal < 0; //Turn sprite appropriately    
         }
 
-        if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0)
-        { // JUMP
+        if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0){ // JUMP
             rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, _jumpVelocity); //Add Y velocity Vector2(x,y)
             _jumpsRemaining--; //Decrease jump count
             _fallTimer = 0; //Reset the fall timer
@@ -63,12 +62,10 @@ public class Player : MonoBehaviour
             _jumpsRemaining = _maxJumps; // Reset Jumps
         }
         else { //If we're NOT grounded
-            //Fall down in increasing velocity
-            _fallTimer += Time.deltaTime;
-            var downForce = _downPull * _fallTimer * _fallTimer;
-            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, rigidbody2d.velocity.y - downForce);
+            _fallTimer += Time.deltaTime; //Fall down in increasing velocity
+            var downForce = _downPull * _fallTimer * _fallTimer; //Set downward force to Serialized Field downForce * _fallTimer^2 (increases gradually, exponentially)
+            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, rigidbody2d.velocity.y - downForce); //Keep X velocity the same, increase downward velocity
         }
-
     }
 
     internal void ResetToStart() //Internal means we can call this method from outside their own script (basically same as public)
