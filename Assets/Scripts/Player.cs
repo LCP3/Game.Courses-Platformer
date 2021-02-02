@@ -55,10 +55,11 @@ public class Player : MonoBehaviour
             rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, _jumpVelocity); //Add Y velocity Vector2(x,y)
            // _jumpsRemaining--; //Decrease jump count
             _fallTimer = 0; //Reset the fall timer
-            _jumpTimer += Time.deltaTime;
         }
 
-        if (isGrounded) { // If we're grounded
+        _jumpTimer += Time.deltaTime; //Jump Timer constantly going, resets on jump.
+
+        if (isGrounded && _fallTimer > 0) { // If we're grounded
             _fallTimer = 0; //Reset the fall timer
             _jumpsRemaining = _maxJumps; // Reset Jumps
         }
