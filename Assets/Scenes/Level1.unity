@@ -527,7 +527,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1273680380}
-  - {fileID: 2079911191}
   - {fileID: 475108631}
   - {fileID: 306873815}
   m_Father: {fileID: 77575252}
@@ -1032,7 +1031,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 7.074618e-23, y: 0.000000047683717, z: -3.373441e-30, w: 1}
+  m_LocalRotation: {x: 6.1394103e-23, y: 0.000000047683717, z: -2.9274989e-30, w: 1}
   m_LocalPosition: {x: -8.72, y: 2.8200002, z: -10}
   m_LocalScale: {x: 1.58, y: 1, z: 1}
   m_Children: []
@@ -1627,10 +1626,6 @@ PrefabInstance:
     - target: {fileID: 8959262057785360372, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
       propertyPath: m_Name
       value: Mushroom
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360372, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
@@ -2234,9 +2229,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 1
   m_FollowOffset: {x: 0, y: 0, z: -10}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -2452,7 +2447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.7592535
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2472,7 +2467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2492,7 +2487,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8959262057785360372, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
@@ -2797,7 +2792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2817,7 +2812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8959262057785360372, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
@@ -2880,7 +2875,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924997524}
-  m_LocalRotation: {x: 7.074618e-23, y: 0.000000047683717, z: -3.373441e-30, w: 1}
+  m_LocalRotation: {x: 6.1394103e-23, y: 0.000000047683717, z: -2.9274989e-30, w: 1}
   m_LocalPosition: {x: -8.72, y: 2.8200002, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3078,11 +3073,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _jumpVelocity: 10
+  _jumpVelocity: 8
   _maxJumps: 2
   _feet: {fileID: 1542091994}
   _downPull: 0.1
-  _maxJumpDuration: 0.1
+  _maxJumpDuration: 0.2
 --- !u!95 &2001131628
 Animator:
   serializedVersion: 3
@@ -3102,72 +3097,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1001 &2079911190
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 256705044}
-    m_Modifications:
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.11281121
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.6009998
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360372, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_Name
-      value: Mushroom (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8959262057785360372, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
---- !u!4 &2079911191 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8959262057785360371, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
-  m_PrefabInstance: {fileID: 2079911190}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7887606622344331464
 PrefabInstance:
   m_ObjectHideFlags: 0
