@@ -13,61 +13,106 @@ public class Player : MonoBehaviour
     int _jumpsRemaining;
     float _fallTimer;
     float _jumpTimer;
-    
+    Rigidbody2D _rigidbody2D;
+    Animator _animator;
+    SpriteRenderer _spriteRenderer;
+    float _horizontal;
+    bool _isGrounded;
 
     void Start()
     {
         _startPosition = transform.position; //Set starting position
         _jumpsRemaining = _maxJumps; //Initialize jump count
+        _rigidbody2D = GetComponent<Rigidbody2D>(); //Cached GetComponent's -- only need it called once.
+        _animator = GetComponent<Animator>(); //Get the Animator component
+        _spriteRenderer = GetComponent<SpriteRenderer>(); //Get the SpriteRenderer component
     }
 
     void Update()
     {
-        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default")); //Create overlapping circle to detect if we're grounded (point, radius(f for float), layer mask)
-        bool isGrounded = hit != null; //if hit = null, false | if != null, true (Are we grounded?)
+        UpdateIsGrounded();
 
+        ReadHorizontalInput();
+        MoveHorizontal();
+        UpdateAnimator();
+        UpdateSpriteDirection();
 
-        var horizontal = Input.GetAxis("Horizontal") * _speed; //Axis case-sensitive, goes from -1 to 1 from left to right, middle/resting is 0
-        var rigidbody2d = GetComponent<Rigidbody2D>();
-
-        if (Mathf.Abs(horizontal) >= 1) //Mathf = Math w/ floating point
-        { 
-            rigidbody2d.velocity = new Vector2(horizontal, rigidbody2d.velocity.y);
+        if (ShouldStartJump()) {
+            Jump();
         }
-
-        var animator = GetComponent<Animator>(); //Get the Animator component
-        bool walking = horizontal != 0; //If our horizontal speed isn't 0
-        animator.SetBool("Walk", walking); // Walk
-
-
-        if (horizontal != 0) {
-            var spriteRenderer = GetComponent<SpriteRenderer>(); //Get the Sprite Renderer component
-            spriteRenderer.flipX = horizontal < 0; //Turn sprite appropriately    
-        }
-
-        if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0){ // JUMP
-            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, _jumpVelocity); //Add Y velocity Vector2(x,y)
-            _jumpsRemaining--; //Decrease jump count
-            _fallTimer = 0; //Reset the fall timer
-            _jumpTimer = 0; //Reset jump timer
-        }
-        else if (Input.GetButton("Fire1") && _jumpTimer <= _maxJumpDuration) { //If Jump is held
-            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, _jumpVelocity); //Add Y velocity Vector2(x,y)
-           // _jumpsRemaining--; //Decrease jump count
-            _fallTimer = 0; //Reset the fall timer
+        else if (ShouldContinueJump()) {
+            ContinueJump();
         }
 
         _jumpTimer += Time.deltaTime; //Jump Timer constantly going, resets on jump.
 
-        if (isGrounded && _fallTimer > 0) { // If we're grounded
+        if (_isGrounded && _fallTimer > 0) { // If we're grounded
             _fallTimer = 0; //Reset the fall timer
             _jumpsRemaining = _maxJumps; // Reset Jumps
         }
         else { //If we're NOT grounded
             _fallTimer += Time.deltaTime; //Fall down in increasing velocity
             var downForce = _downPull * _fallTimer * _fallTimer; //Set downward force to Serialized Field downForce * _fallTimer^2 (increases gradually, exponentially)
-            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, rigidbody2d.velocity.y - downForce); //Keep X velocity the same, increase downward velocity
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y - downForce); //Keep X velocity the same, increase downward velocity
         }
+    }
+
+    void ContinueJump()
+    {
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpVelocity); //Add Y velocity Vector2(x,y)
+                                                                                     // _jumpsRemaining--; //Decrease jump count
+        _fallTimer = 0; //Reset the fall timer
+    }
+
+    bool ShouldContinueJump()
+    {
+        return Input.GetButton("Fire1") && _jumpTimer <= _maxJumpDuration;
+    }
+
+    void Jump()
+    {
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpVelocity); //Add Y velocity Vector2(x,y)
+        _jumpsRemaining--; //Decrease jump count
+        _fallTimer = 0; //Reset the fall timer
+        _jumpTimer = 0; //Reset jump timer
+    }
+
+    bool ShouldStartJump()
+    {
+        return Input.GetButtonDown("Fire1") && _jumpsRemaining > 0;
+    }
+
+    void MoveHorizontal()
+    {
+        if (Mathf.Abs(_horizontal) >= 1) //Mathf = Math w/ floating point
+        {
+            _rigidbody2D.velocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
+        }
+    }
+
+    void ReadHorizontalInput()
+    {
+        _horizontal = Input.GetAxis("Horizontal") * _speed; //Axis case-sensitive, goes from -1 to 1 from left to right, middle/resting is 0
+    }
+
+    void UpdateSpriteDirection()
+    {
+        if (_horizontal != 0)
+        {
+            _spriteRenderer.flipX = _horizontal < 0; //Turn sprite appropriately    
+        }
+    }
+
+    void UpdateAnimator()
+    {
+        bool walking = _horizontal != 0; //If our horizontal speed isn't 0
+        _animator.SetBool("Walk", walking); // Walk
+    }
+
+    void UpdateIsGrounded()
+    {
+        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default")); //Create overlapping circle to detect if we're grounded (point, radius(f for float), layer mask)
+        _isGrounded = hit != null; //if hit = null, false | if != null, true (Are we grounded?)
     }
 
     internal void ResetToStart() //Internal means we can call this method from outside their own script (basically same as public)
