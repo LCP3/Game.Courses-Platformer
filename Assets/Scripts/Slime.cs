@@ -23,22 +23,30 @@ public class Slime : MonoBehaviour
 
         if (_direction < 0)
         {
-            Debug.DrawRay(_leftSensor.position, Vector2.down * 0.1f, Color.red);  //Visual representation of RayCasted line for debugging purposes
-            var result = Physics2D.Raycast(_leftSensor.position, Vector2.down, 0.1f); //Physics2D.Raycast(origin, direction, distance)
-            if (result.collider == null)
-            {
-                TurnAround();
-            }
+            ScanSensor(_leftSensor);
         }
         else {
-            Debug.DrawRay(_rightSensor.position, Vector2.down * 0.1f, Color.red);  //Visual representation of RayCasted line for debugging purposes
-            var result = Physics2D.Raycast(_rightSensor.position, Vector2.down, 0.1f); //Physics2D.Raycast(origin, direction, distance)
-            if (result.collider == null)
-            {
-                TurnAround();
-            }
+            ScanSensor(_rightSensor);
+        }
+    }
+
+    void ScanSensor(Transform sensor)
+    {
+        Debug.DrawRay(sensor.position, Vector2.down * 0.1f, Color.red);  //Visual representation of RayCasted line downward for debugging purposes
+        
+        var result = Physics2D.Raycast(sensor.position, Vector2.down, 0.1f); //Physics2D.Raycast(origin, direction, distance)
+        if (result.collider == null)
+        {
+            TurnAround();
         }
 
+        Debug.DrawRay(sensor.position, new Vector2(_direction, 0) * 0.1f, Color.red);  //Visual representation of RayCasted line in the movement direction for debugging purposes
+
+        var sideResult = Physics2D.Raycast(sensor.position, new Vector2(_direction, 0), 0.1f); //Physics2D.Raycast(origin, direction, distance)
+        if (sideResult.collider != null)
+        {
+            TurnAround();
+        }
     }
 
     void TurnAround()
