@@ -2,12 +2,16 @@
 
 public class Player : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] float _speed = 1;
+    [SerializeField] float _slipFactor = 1;
+    [Header("Jump")]
     [SerializeField] float _jumpVelocity = 10;
     [SerializeField] int _maxJumps = 2;
     [SerializeField] Transform _feet;
     [SerializeField] float _downPull = 5;
     [SerializeField] float _maxJumpDuration = 0.1f;
+    
 
     Vector3 _startPosition;
     int _jumpsRemaining;
@@ -18,6 +22,7 @@ public class Player : MonoBehaviour
     SpriteRenderer _spriteRenderer;
     float _horizontal;
     bool _isGrounded;
+    bool _isSlipperySurface;
 
     void Start()
     {
@@ -31,9 +36,18 @@ public class Player : MonoBehaviour
     void Update()
     {
         UpdateIsGrounded();
-
         ReadHorizontalInput();
-        MoveHorizontal();
+
+
+        if (_isSlipperySurface)
+        {
+            SlipHorizontal();
+        }
+        else
+        {
+            MoveHorizontal();
+        }
+
         UpdateAnimator();
         UpdateSpriteDirection();
 
@@ -84,10 +98,18 @@ public class Player : MonoBehaviour
 
     void MoveHorizontal()
     {
-        if (Mathf.Abs(_horizontal) >= 1) //Mathf = Math w/ floating point
-        {
-            _rigidbody2D.velocity = new Vector2(_horizontal, _rigidbody2D.velocity.y);
-        }
+        _rigidbody2D.velocity = new Vector2(_horizontal * _speed, _rigidbody2D.velocity.y);
+    }
+
+    void SlipHorizontal()
+    {
+        var desiredVelocity = new Vector2(_horizontal * _speed, _rigidbody2D.velocity.y);
+        var smoothedVelocity = Vector2.Lerp( //Linear interpolation smoothed over one second
+            _rigidbody2D.velocity,
+            desiredVelocity,
+            Time.deltaTime / _slipFactor);
+
+        _rigidbody2D.velocity = smoothedVelocity;
     }
 
     void ReadHorizontalInput()
@@ -113,6 +135,14 @@ public class Player : MonoBehaviour
     {
         var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default")); //Create overlapping circle to detect if we're grounded (point, radius(f for float), layer mask)
         _isGrounded = hit != null; //if hit = null, false | if != null, true (Are we grounded?)
+
+        if (hit != null) //Check we're grounded, if so
+        {
+            _isSlipperySurface = hit.CompareTag("Slippery"); //Set Slippery to true
+        }
+        else { 
+            _isSlipperySurface = false; //Set Slippery off
+        }
     }
 
     internal void ResetToStart() //Internal means we can call this method from outside their own script (basically same as public)
@@ -120,3 +150,4 @@ public class Player : MonoBehaviour
         transform.position = _startPosition;
     }
 }
+

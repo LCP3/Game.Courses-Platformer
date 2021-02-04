@@ -1216,7 +1216,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 5.659356e-23, y: 0.000000047683717, z: -2.6985914e-30, w: 1}
+  m_LocalRotation: {x: -6.123946e-23, y: 0.000000047683717, z: 2.920125e-30, w: 1}
   m_LocalPosition: {x: -15.22, y: 4.8200006, z: -10}
   m_LocalScale: {x: 1.58, y: 1, z: 1}
   m_Children: []
@@ -1785,7 +1785,7 @@ GameObject:
   - component: {fileID: 1328467673}
   m_Layer: 0
   m_Name: snowMid
-  m_TagString: Untagged
+  m_TagString: Slippery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1799,7 +1799,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1328467672}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 343e93d4e90fd5b428f42a0d69ddd7e1, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -3137,7 +3137,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924997524}
-  m_LocalRotation: {x: 5.659356e-23, y: 0.000000047683717, z: -2.6985914e-30, w: 1}
+  m_LocalRotation: {x: -6.123946e-23, y: 0.000000047683717, z: 2.920125e-30, w: 1}
   m_LocalPosition: {x: -15.22, y: 4.8200006, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -3334,7 +3334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27de88d426bf0084f967f419ead00dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 2.75
+  _slipFactor: 0.75
   _jumpVelocity: 8
   _maxJumps: 2
   _feet: {fileID: 1542091994}
