@@ -7,8 +7,11 @@ public class Slime : MonoBehaviour
 {
     [SerializeField] Transform _leftSensor; // Give our sensors a reference to access the properties
     [SerializeField] Transform _rightSensor;
+    [SerializeField] Sprite _deadSprite;
+
     Rigidbody2D _rigidbody2D;
     float _direction = -1;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +66,37 @@ public class Slime : MonoBehaviour
             return;
         }
 
-        player.ResetToStart();
+        var contact = collision.contacts[0];
+        Vector2 normal = contact.normal;
+        Debug.Log($"Normal = {normal}");
+
+        if (normal.y <= -0.5)
+        {
+            StartCoroutine(Die());
+        }
+        else
+        {
+            player.ResetToStart();
+        }
+    }
+
+    IEnumerator Die()
+    {
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        spriteRenderer.sprite = _deadSprite; //Get our sprite renderer and immediately set a property's value.  Only making the call one time.
+        GetComponent<Animator>().enabled = false; //Turn off our animation
+        GetComponent<Collider2D>().enabled = false; //Turn off our capsule collider (Collider2D is the base class of CapsuleCollider2D)
+        this.enabled = false; //Turn off Slime.cs
+        GetComponent<Rigidbody2D>().simulated = false; //Turn off our physics.
+
+        float alpha = 1;
+
+        while (alpha > 0) //While alpha is greater than 0
+        {
+            yield return null; //Wait until next frame
+            alpha -= Time.deltaTime; //Decrement alpha by Time.deltaTime
+            spriteRenderer.color = new Color(1, 1, 1, alpha);
+        }        
     }
 }
