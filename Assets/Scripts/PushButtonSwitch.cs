@@ -4,10 +4,12 @@ using UnityEngine.Events;
 public class PushButtonSwitch : MonoBehaviour
 {
     [SerializeField] Sprite _pressedSprite;
+    [SerializeField] int _playerNumber = 1;
     [SerializeField] UnityEvent _onPressed; //On press, we want this event to happen
     [SerializeField] UnityEvent _onReleased; //On release, we want this event to happen
     SpriteRenderer _spriteRenderer;
     Sprite _releasedSprite;
+    
 
     void Awake()
     {
@@ -19,7 +21,7 @@ public class PushButtonSwitch : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision) // On collision
     {
         var player = collision.GetComponent<Player>(); //Get the player
-        if (player == null)
+        if (player == null || player.PlayerNumber != _playerNumber)
         { //If no player
             return; //Exit
         }
@@ -34,7 +36,7 @@ public class PushButtonSwitch : MonoBehaviour
     void OnTriggerExit2D(Collider2D collision)
     {
         var player = collision.GetComponent<Player>(); //Get the player
-        if (player == null)
+        if (player == null || player.PlayerNumber != _playerNumber)
         { //If no player
             return; //Exit
         }

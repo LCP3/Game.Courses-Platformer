@@ -24,7 +24,8 @@ public class Player : MonoBehaviour
     float _horizontal;
     bool _isGrounded;
     bool _isSlipperySurface;
-    
+
+    public int PlayerNumber => _playerNum; //Shorthand for getter
 
     void Start()
     {
