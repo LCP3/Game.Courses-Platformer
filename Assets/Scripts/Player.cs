@@ -132,6 +132,7 @@ public class Player : MonoBehaviour
     {
         bool walking = _horizontal != 0; //If our horizontal speed isn't 0
         _animator.SetBool("Walk", walking); // Walk
+        _animator.SetBool("Jump", ShouldContinueJump());
     }
 
     void UpdateIsGrounded()
