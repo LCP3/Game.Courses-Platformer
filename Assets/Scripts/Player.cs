@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform _feet;
     [SerializeField] float _downPull = 5;
     [SerializeField] float _maxJumpDuration = 0.1f;
-    
+
 
     Vector3 _startPosition;
     int _jumpsRemaining;
@@ -54,20 +54,24 @@ public class Player : MonoBehaviour
         UpdateAnimator();
         UpdateSpriteDirection();
 
-        if (ShouldStartJump()) {
+        if (ShouldStartJump())
+        {
             Jump();
         }
-        else if (ShouldContinueJump()) {
+        else if (ShouldContinueJump())
+        {
             ContinueJump();
         }
 
         _jumpTimer += Time.deltaTime; //Jump Timer constantly going, resets on jump.
 
-        if (_isGrounded && _fallTimer > 0) { // If we're grounded
+        if (_isGrounded && _fallTimer > 0)
+        { // If we're grounded
             _fallTimer = 0; //Reset the fall timer
             _jumpsRemaining = _maxJumps; // Reset Jumps
         }
-        else { //If we're NOT grounded
+        else
+        { //If we're NOT grounded
             _fallTimer += Time.deltaTime; //Fall down in increasing velocity
             var downForce = _downPull * _fallTimer * _fallTimer; //Set downward force to Serialized Field downForce * _fallTimer^2 (increases gradually, exponentially)
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y - downForce); //Keep X velocity the same, increase downward velocity
@@ -144,14 +148,21 @@ public class Player : MonoBehaviour
         {
             _isSlipperySurface = hit.CompareTag("Slippery"); //Set Slippery to true
         }
-        else { 
+        else
+        {
             _isSlipperySurface = false; //Set Slippery off
         }
     }
 
     internal void ResetToStart() //Internal means we can call this method from outside their own script (basically same as public)
     {
-        transform.position = _startPosition;
+        _rigidbody2D.position = _startPosition;
     }
-}
 
+    internal void TeleportTo(Vector3 position)
+    {
+        _rigidbody2D.position = position;
+        _rigidbody2D.velocity = Vector2.zero;
+    }
+
+}
