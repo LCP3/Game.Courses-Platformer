@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    static int _coinsCollected; //Static = only one instance of this variable across all game objects
+    public static int CoinsCollected; //Static = only one instance of this variable across all game objects
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,7 +15,7 @@ public class Coin : MonoBehaviour
         }
 
         gameObject.SetActive(false); //Turn off coin
-        _coinsCollected++; //Add to coin counter
-        Debug.Log(_coinsCollected);
+        CoinsCollected++; //Add to coin counter
+        Debug.Log(CoinsCollected);
     }
 }
