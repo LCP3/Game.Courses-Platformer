@@ -16,6 +16,5 @@ public class Coin : MonoBehaviour
 
         gameObject.SetActive(false); //Turn off coin
         CoinsCollected++; //Add to coin counter
-        Debug.Log(CoinsCollected);
     }
 }
