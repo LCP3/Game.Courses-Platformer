@@ -5,12 +5,20 @@ using UnityEngine;
 
 public class FallingPlatform : MonoBehaviour
 {
-    [SerializeField] float _fallSpeed = 3;
     public bool PlayerTrigger;
-    
+    bool _falling;
+    float _wiggleTimer = 0;
+
     HashSet<Player> _playersInTrigger = new HashSet<Player>(); //HashSet requires SysCol, allows us to have an instance of each player
     Vector3 _initialPosition;
-    bool _falling;
+
+    [Tooltip("Resets the wiggle timer when no players are on the platform.")]
+    [SerializeField] bool _resetOnEmpty;
+    [SerializeField] float _fallSpeed = 6;
+    [Range(0.1f, 5)] [SerializeField] float _secondsBeforeFall = 3; //Range adds a slider in inspector
+    [Range(0.005f, 0.1f)] [SerializeField] float _shakeX = 0.05f;
+    [Range(0.005f, 0.1f)] [SerializeField] float _shakeY = 0.05f;
+    private Coroutine _coroutine;
 
     void Start()
     {
@@ -31,30 +39,34 @@ public class FallingPlatform : MonoBehaviour
 
         if (_playersInTrigger.Count == 1) 
         {
-            StartCoroutine(WiggleAndFall());
+            _coroutine = StartCoroutine(WiggleAndFall()); //Set and start our coroutine
         }
     }
 
     IEnumerator WiggleAndFall()
     {
         Debug.Log("Waiting to wiggle");
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.25f); //Wait to wiggle
         Debug.Log("Wiggling");
-        float wiggleTimer = 0;
+        //_wiggleTimer = 0;
 
-        while (wiggleTimer < 1f) //While we're wiggling
+        while (_wiggleTimer < _secondsBeforeFall) //While we're wiggling
         {
-            float randomY = UnityEngine.Random.Range(-0.05f, 0.05f);
-            float randomX = UnityEngine.Random.Range(-0.05f, 0.05f);
+            float randomY = UnityEngine.Random.Range(-_shakeX, _shakeY);
+            float randomX = UnityEngine.Random.Range(-_shakeX, _shakeY);
 
             transform.position = _initialPosition + new Vector3(randomX, randomY); //Move our position a random distance from our initial position
+
             float randomDelay = UnityEngine.Random.Range(0.005f, 0.01f);
             yield return new WaitForSeconds(randomDelay); //Wait for a random delay
-            wiggleTimer += randomDelay; //Add to our wiggle timer
+
+            _wiggleTimer += randomDelay; //Add to our wiggle timer
         }
 
         Debug.Log("Falling");
         _falling = true;
+        Debug.Log(_playersInTrigger);
+
 
         foreach (var collider in GetComponents<Collider2D>()) //Get our colliders into an array, also can be written "Colliders[] collider ="
         {
@@ -67,7 +79,6 @@ public class FallingPlatform : MonoBehaviour
         {
             transform.position += Vector3.down * Time.deltaTime* _fallSpeed; //Move down over time multiplied by our fall speed
             fallTimer += Time.deltaTime;
-            Debug.Log(fallTimer);
             yield return null; //Wait until next frame           
         }
         Destroy(gameObject); //Destroy our platform after looping complete
@@ -91,7 +102,13 @@ public class FallingPlatform : MonoBehaviour
         if (_playersInTrigger.Count == 0) //If there are 0 players in the trigger
         {
             PlayerTrigger = false; //Toggle
-            StopCoroutine(WiggleAndFall()); // Stop our coroutine
+            
+            StopCoroutine(_coroutine); // Stop our coroutine
+
+            if (_resetOnEmpty)
+            {
+                _wiggleTimer = 0;
+            }
         }
         
     }
