@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Collector : MonoBehaviour
 {
 
     [SerializeField] List<Collectible> _collectibles; //Hashset of collectibles named _collectibles
+    [SerializeField] UnityEvent _onCollectionComplete;
+
     TMP_Text _remainingCounter;
 
     // Start is called before the first frame update
@@ -36,11 +39,8 @@ public class Collector : MonoBehaviour
         {
             return;
         }
-        //if (_collectibles.Any(t => t.gameObject.activeSelf == true)) //Any uses System.Linq, if any item in the array matches the statement, if any items in the array return true, this statement will also return true
-        //{
-          //  return;        
-        //}
-        Debug.Log("Got all gems.");
+
+        _onCollectionComplete.Invoke(); //Invoke our unity event, opening the door and removing the canvas.
     }
 
     //Called in the editor only when we change a value in the inspector

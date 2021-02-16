@@ -10,22 +10,19 @@ public class Door : MonoBehaviour
     [SerializeField] SpriteRenderer _rendererTop;
     [SerializeField] Door _exit;
     [SerializeField] Canvas _canvas;
-
+    [SerializeField] int _requiredCoins = 2;
 
     bool _doorOpened;
 
-
-    int _requiredCoins = 2;
-
     [ContextMenu("Open Door")]
-    void Open() //When our door opens
+    public void Open() //When our door opens
     {
         _doorOpened = true;
         _rendererMid.sprite = _openMid; //Change out the sprites
         _rendererTop.sprite = _openTop;
 
         if (_canvas != null) { //If the object has a canvas
-            _canvas.enabled = false; //Turn off the door coin counter UI
+            _canvas.enabled = false; //Turn off the door counter UI
         }
     }
 
