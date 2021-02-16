@@ -24,6 +24,9 @@ public class Player : MonoBehaviour
     float _horizontal;
     bool _isGrounded;
     bool _isSlipperySurface;
+    string _jumpButton;
+    string _horizontalAxis;
+    int _layerMask;
 
     public int PlayerNumber => _playerNum; //Shorthand for getter
 
@@ -34,6 +37,9 @@ public class Player : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>(); //Cached GetComponent's -- only need it called once.
         _animator = GetComponent<Animator>(); //Get the Animator component
         _spriteRenderer = GetComponent<SpriteRenderer>(); //Get the SpriteRenderer component
+        _jumpButton = $"P{_playerNum}Jump"; //Cache string interpolation for performance
+        _horizontalAxis = $"P{_playerNum}Horizontal"; //Performance cache
+        _layerMask = LayerMask.GetMask("Default"); //Performance cache
     }
 
     void Update()
@@ -87,7 +93,7 @@ public class Player : MonoBehaviour
 
     bool ShouldContinueJump()
     {
-        return Input.GetButton($"P{_playerNum}Jump") && _jumpTimer <= _maxJumpDuration;
+        return Input.GetButton(_jumpButton) && _jumpTimer <= _maxJumpDuration;
     }
 
     void Jump()
@@ -100,7 +106,7 @@ public class Player : MonoBehaviour
 
     bool ShouldStartJump()
     {
-        return Input.GetButtonDown($"P{_playerNum}Jump") && _jumpsRemaining > 0;
+        return Input.GetButtonDown(_jumpButton) && _jumpsRemaining > 0;
     }
 
     void MoveHorizontal()
@@ -121,7 +127,7 @@ public class Player : MonoBehaviour
 
     void ReadHorizontalInput()
     {
-        _horizontal = Input.GetAxis($"P{_playerNum}Horizontal") * _speed; //Axis case-sensitive, goes from -1 to 1 from left to right, middle/resting is 0
+        _horizontal = Input.GetAxis(_horizontalAxis) * _speed; //Axis case-sensitive, goes from -1 to 1 from left to right, middle/resting is 0
     }
 
     void UpdateSpriteDirection()
@@ -141,7 +147,7 @@ public class Player : MonoBehaviour
 
     void UpdateIsGrounded()
     {
-        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, LayerMask.GetMask("Default")); //Create overlapping circle to detect if we're grounded (point, radius(f for float), layer mask)
+        var hit = Physics2D.OverlapCircle(_feet.position, 0.1f, _layerMask); //Create overlapping circle to detect if we're grounded (point, radius(f for float), layer mask)
         _isGrounded = hit != null; //if hit = null, false | if != null, true (Are we grounded?)
 
         if (hit != null) //Check we're grounded, if so
