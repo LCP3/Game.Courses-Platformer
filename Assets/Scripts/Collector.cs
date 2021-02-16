@@ -7,13 +7,14 @@ using UnityEngine;
 public class Collector : MonoBehaviour
 {
 
-    [SerializeField] Collectible[] _collectibles;
+    [SerializeField] List<Collectible> _collectibles; //Hashset of collectibles named _collectibles
     TMP_Text _remainingCounter;
 
     // Start is called before the first frame update
     void Start()
     {
         _remainingCounter = GetComponentInChildren<TMP_Text>();
+
     }
 
     // Update is called once per frame
@@ -40,5 +41,11 @@ public class Collector : MonoBehaviour
           //  return;        
         //}
         Debug.Log("Got all gems.");
+    }
+
+    //Called in the editor only when we change a value in the inspector
+    void OnValidate()
+    {
+        _collectibles = _collectibles.Distinct().ToList(); //Turn the .Distinct (Linq statement that finds only the distinct/unique entries) into a List, preventing duplicates
     }
 }
