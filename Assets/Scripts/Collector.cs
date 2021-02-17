@@ -10,22 +10,20 @@ public class Collector : MonoBehaviour
 {
 
     [SerializeField] List<Collectible> _collectibles; //Hashset of collectibles named _collectibles
-    [SerializeField] UnityEvent _onCollectionComplete;
+    [SerializeField] UnityEvent _onCollectionComplete; //UnityEvent holds trigger for the door
 
     TMP_Text _remainingCounter;
 
-
-
-    public int _countCollected;
+    int _countCollected;
 
     // Start is called before the first frame update
     void Start()
     {
         _remainingCounter = GetComponentInChildren<TMP_Text>();
 
-        foreach (var collectible in _collectibles)
+        foreach (var collectible in _collectibles) //For each collectible in the List
         {
-            collectible.SetCollector(this);
+            collectible.AddCollector(this); //Set collectible to (this)
         }
 
         int countRemaining = _collectibles.Count - _countCollected;

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    Collector _collector;
+    List<Collector> _collectors = new List<Collector>(); //List of type Collector, new List of Collectors instantiated since we're not Serializing
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,11 +15,16 @@ public class Collectible : MonoBehaviour
         }
 
         gameObject.SetActive(false);
-        _collector.ItemPickedUp();
+
+        foreach (var collector in _collectors)
+        {
+            collector.ItemPickedUp();
+        }
+        
     }
 
-    internal void SetCollector(Collector collector)
+    internal void AddCollector(Collector collector)
     {
-        _collector = collector; //Keep a copy of this variable for the life of the class, and store in a field
+        _collectors.Add(collector); //Add collector to our list of collectors
     }
 }
