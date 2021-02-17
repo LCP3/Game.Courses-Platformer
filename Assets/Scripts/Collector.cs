@@ -49,4 +49,23 @@ public class Collector : MonoBehaviour
     {
         _collectibles = _collectibles.Distinct().ToList(); //Turn the .Distinct (Linq statement that finds only the distinct/unique entries) into a List, preventing duplicates
     }
+    //Runs whenever the editor is displaying gizmos that are selected (TMP, Camera, etc)
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        foreach (var collectible in _collectibles) //For each collectible
+        {            
+            Gizmos.DrawLine(transform.position, collectible.transform.position); //Draw a line in our editor from our collectible to our collector
+        }
+    }
+
+    //On all drawn Gizmos
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.grey;
+        foreach (var collectible in _collectibles) //For each collectible
+        {
+            Gizmos.DrawLine(transform.position, collectible.transform.position); //Draw a line in our editor from our collectible to our collector
+        }
+    }
 }
