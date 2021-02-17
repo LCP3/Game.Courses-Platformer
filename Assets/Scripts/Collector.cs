@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -13,26 +14,28 @@ public class Collector : MonoBehaviour
 
     TMP_Text _remainingCounter;
 
+
+
+    public int _countCollected;
+
     // Start is called before the first frame update
     void Start()
     {
         _remainingCounter = GetComponentInChildren<TMP_Text>();
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        int countRemaining = 0; //
         foreach (var collectible in _collectibles)
         {
-            if (collectible.isActiveAndEnabled)
-            {
-                countRemaining++;
-            }
+            collectible.SetCollector(this);
         }
 
+        int countRemaining = _collectibles.Count - _countCollected;
+        _remainingCounter?.SetText(countRemaining.ToString());
+    }
+
+    public void ItemPickedUp()
+    {
+        _countCollected++; //Increment our count collected
+        int countRemaining = _collectibles.Count - _countCollected;
         _remainingCounter?.SetText(countRemaining.ToString()); //Set the counter's text to our remaining amount of collectibles -- the ? is shorthand for != null (evaluates true)
 
         if (countRemaining > 0)
