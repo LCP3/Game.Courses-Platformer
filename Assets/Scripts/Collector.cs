@@ -23,7 +23,7 @@ public class Collector : MonoBehaviour
 
         foreach (var collectible in _collectibles) //For each collectible in the List
         {
-            collectible.AddCollector(this); //Set collectible to (this)
+            collectible.OnPickedUp += ItemPickedUp; //Adding/appending to our event, += to register, -= to deregister
         }
 
         int countRemaining = _collectibles.Count - _countCollected;

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    List<Collector> _collectors = new List<Collector>(); //List of type Collector, new List of Collectors instantiated since we're not Serializing
+    //List<Collector> _collectors = new List<Collector>(); //List of type Collector, new List of Collectors instantiated since we're not Serializing
+
+    public event Action OnPickedUp; //Event with the Action delegation
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -16,15 +18,12 @@ public class Collectible : MonoBehaviour
 
         gameObject.SetActive(false);
 
-        foreach (var collector in _collectors)
-        {
-            collector.ItemPickedUp();
-        }
-        
-    }
+        OnPickedUp?.Invoke(); //Need a question mark/if due to event defaulting to null
 
-    internal void AddCollector(Collector collector)
-    {
-        _collectors.Add(collector); //Add collector to our list of collectors
+        /*if (OnPickedUp != null)
+        {
+            OnPickedUp.Invoke();
+        }*/
+        
     }
 }
