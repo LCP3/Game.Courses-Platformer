@@ -12,7 +12,7 @@ public class Breakable : MonoBehaviour
             return;
         }
 
-        if (collision.contacts[0].normal.y > 0) //If hit by player from below
+        if (collision.contacts[0].normal.y > 0) //If hit by player from below on first contact
         {
             TakeHit();
         }

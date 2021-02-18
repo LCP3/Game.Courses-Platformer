@@ -54,7 +54,7 @@ public class Collector : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         foreach (var collectible in _collectibles) //For each collectible
-        {            
+        {
             Gizmos.DrawLine(transform.position, collectible.transform.position); //Draw a line in our editor from our collectible to our collector
         }
     }
@@ -64,7 +64,7 @@ public class Collector : MonoBehaviour
     {
         Gizmos.color = Color.grey;
         foreach (var collectible in _collectibles) //For each collectible
-        {
+        { 
             Gizmos.DrawLine(transform.position, collectible.transform.position); //Draw a line in our editor from our collectible to our collector
         }
     }
