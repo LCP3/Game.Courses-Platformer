@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemBox : HittableFromBelow
 {
@@ -8,39 +6,28 @@ public class ItemBox : HittableFromBelow
     [SerializeField] Vector2 _itemLaunchVelocity;
     
     bool _isEmpty = false;
+    protected override bool CanUse => _isEmpty == false && _item != null;
 
     void Start()
     {
-        if (_item != null)
+        if (CanUse)
         {
             _item.SetActive(false); //Turn off our item at start until we collide
         }
     }
-
-    void OnCollisionEnter2D(Collision2D collision)
+    protected override void Use()
     {
-        if (_isEmpty)
+        if (_item == null)
             return;
 
-        var player = collision.collider.GetComponent<Player>(); //Verify collision is a player
-        if (player == null)
-        {
-            return;
-        }
+        base.Use();
 
-        if (collision.contacts[0].normal.y > 0) //Verify first contact is from below
+        _isEmpty = true;
+        _item.SetActive(true);
+        var itemRigidBody = _item.GetComponent<Rigidbody2D>();
+        if (itemRigidBody != null)
         {
-            GetComponent<SpriteRenderer>().sprite = _usedSprite;
-
-            if (_item != null)
-            {
-                _isEmpty = true;
-                _item.SetActive(true);
-                var itemRigidBody = _item.GetComponent<Rigidbody2D>();
-                {
-                    itemRigidBody.velocity = _itemLaunchVelocity;
-                }
-            }
-        }
+            itemRigidBody.velocity = _itemLaunchVelocity;
+        }        
     }
 }
