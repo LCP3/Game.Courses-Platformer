@@ -2,34 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinBox : MonoBehaviour
+public class CoinBox : HittableFromBelow
 {
     [SerializeField] int _totalCoins = 3; //Adjustable coin count in box
-    [SerializeField] Sprite _usedSprite;
+
     int _remainingCoins;
+
+    protected override bool CanUse => _remainingCoins > 0; //Return bool to CanUse
 
     private void Start()
     {
         _remainingCoins = _totalCoins;
     }
-    void OnCollisionEnter2D(Collision2D collision)
+
+    protected override void Use()
     {
-        var player = collision.collider.GetComponent<Player>(); //Verify collision is a player
-        if (player == null)
-        {
-            return;
-        }
-
-        if (collision.contacts[0].normal.y > 0 && _remainingCoins > 0) //Verify first contact is from below, and coins are still in the box
-        {
-            _remainingCoins--;
-            if (_remainingCoins <= 0) //<= just a precautionary catch
-            {
-                GetComponent<SpriteRenderer>().sprite = _usedSprite;
-            }
-            Coin.CoinsCollected++;
-        }
-
-        
+        base.Use(); //Run the code in the base class (HittableFromBelow)
+        _remainingCoins--;        
+        Coin.CoinsCollected++;
+        Debug.Log("Added coin");
     }
 }
