@@ -5,13 +5,23 @@ public class SwitchLever : MonoBehaviour
 {
     [SerializeField] Sprite _PushSwitchLeft;
     [SerializeField] Sprite _PushSwitchRight;
-    [SerializeField] UnityEvent _onPushLeft;
-    [SerializeField] UnityEvent _onPushRight;
+    [SerializeField] Sprite _PushSwitchCenter;
+
+    [SerializeField] UnityEvent _onLeft;
+    [SerializeField] UnityEvent _onRight;
+    [SerializeField] UnityEvent _onCenter;
 
     SpriteRenderer _spriteRenderer;
-    
+    LeverDirection _currentDirection;
 
-    void Awake()
+    enum LeverDirection
+    { 
+        Left,
+        Center,
+        Right,
+    }
+
+    void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>(); // Cache our sprite renderer
     }
@@ -38,27 +48,37 @@ public class SwitchLever : MonoBehaviour
         // if (contactPoint.x > 0) // If the switch is pushed left, from the right side
         if (wasOnRight && playerWalkingRight)
          {
-            SetPosition(true);
+            SetLeverPosition(LeverDirection.Right);
          }
         
         // if (contactPoint.x < 0) // If pushed right, from left
         else if (wasOnRight == false && playerWalkingLeft)
          {
-            SetPosition(false);
+            SetLeverPosition(LeverDirection.Left);
         }
     }
 
-    void SetPosition(bool right)
+    void SetLeverPosition(LeverDirection direction)
     {
-        if (right)
+        if (_currentDirection == direction)
+            return;
+
+        switch (direction)
         {
-            _spriteRenderer.sprite = _PushSwitchRight;
-            _onPushRight.Invoke();
-        }
-        else
-        {
-            _spriteRenderer.sprite = _PushSwitchLeft;
-            _onPushLeft.Invoke();
+            case LeverDirection.Left:
+                _spriteRenderer.sprite = _PushSwitchLeft;
+                _onLeft.Invoke();
+                break;
+            case LeverDirection.Center:
+                _spriteRenderer.sprite = _PushSwitchCenter;
+                _onCenter.Invoke();
+                break;
+            case LeverDirection.Right:
+                _spriteRenderer.sprite = _PushSwitchRight;
+                _onRight.Invoke();
+                break;
+            default:
+                break;
         }
     }
 
