@@ -38,15 +38,32 @@ public class SwitchLever : MonoBehaviour
         // if (contactPoint.x > 0) // If the switch is pushed left, from the right side
         if (wasOnRight && playerWalkingRight)
          {
-             _spriteRenderer.sprite = _PushSwitchRight; // Change out the sprite
-             _onPushLeft.Invoke(); //Invoke our UnityEvents, Door.Open(), Door.Close()
+            SetPosition(true);
          }
         
         // if (contactPoint.x < 0) // If pushed right, from left
         else if (wasOnRight == false && playerWalkingLeft)
          {
-             _spriteRenderer.sprite = _PushSwitchLeft; // Change out the sprite
-             _onPushRight.Invoke(); // Invoke our UnityEvents, Door.Open(), Door.Close()
-         }
+            SetPosition(false);
+        }
+    }
+
+    void SetPosition(bool right)
+    {
+        if (right)
+        {
+            _spriteRenderer.sprite = _PushSwitchRight;
+            _onPushRight.Invoke();
+        }
+        else
+        {
+            _spriteRenderer.sprite = _PushSwitchLeft;
+            _onPushLeft.Invoke();
+        }
+    }
+
+    public void LogUsingEvent()
+    {
+        Debug.Log("Using Event");
     }
 }
