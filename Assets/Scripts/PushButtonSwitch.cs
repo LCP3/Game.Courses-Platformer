@@ -31,7 +31,7 @@ public class PushButtonSwitch : MonoBehaviour
     void BecomePressed()
     {
         _spriteRenderer.sprite = _pressedSprite; //Access sprite property
-        _onPressed?.Invoke(); //Call any events for _onEnter
+        _onPressed?.Invoke(); //Call any events for _onPressed
     }
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -45,10 +45,10 @@ public class PushButtonSwitch : MonoBehaviour
     }
     void BecomeReleased()
     {
-        if (_onReleased.GetPersistentEventCount() != 0)
+        if (_onReleased.GetPersistentEventCount() != 0) //If no events in _onReleased
         {
             _spriteRenderer.sprite = _releasedSprite; //Access sprite property
-            _onReleased.Invoke(); //Call any events for _onEnter
+            _onReleased.Invoke(); //Call any events for _onReleased
         }
     }
 }

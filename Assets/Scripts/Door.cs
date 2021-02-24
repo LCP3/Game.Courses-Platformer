@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] Sprite _openMid;
-    [SerializeField] Sprite _openTop;
+    [SerializeField] Sprite _openMidSprite;
+    [SerializeField] Sprite _openTopSprite;
     [SerializeField] SpriteRenderer _rendererMid;
     [SerializeField] SpriteRenderer _rendererTop;
     [SerializeField] Door _exit;
     [SerializeField] Canvas _canvas;
     [SerializeField] int _requiredCoins = 2;
+    [SerializeField] Sprite _closedMidSprite;
+    [SerializeField] Sprite _closedTopSprite;
 
     bool _doorOpened;
 
@@ -18,12 +20,19 @@ public class Door : MonoBehaviour
     public void Open() //When our door opens
     {
         _doorOpened = true;
-        _rendererMid.sprite = _openMid; //Change out the sprites
-        _rendererTop.sprite = _openTop;
+        _rendererMid.sprite = _openMidSprite; //Change out the sprites
+        _rendererTop.sprite = _openTopSprite;
 
         if (_canvas != null) { //If the object has a canvas
             _canvas.enabled = false; //Turn off the door counter UI
         }
+    }
+
+    public void Close() //When our door closes
+    {
+        _doorOpened = false;
+        _rendererMid.sprite = _closedMidSprite;
+        _rendererTop.sprite = _closedTopSprite;
     }
 
     void Update()
