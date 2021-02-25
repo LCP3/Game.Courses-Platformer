@@ -3,6 +3,8 @@ using UnityEngine.Events;
 
 public class SwitchLever : MonoBehaviour
 {
+    [SerializeField] LeverDirection _startingDirection = LeverDirection.Center;
+
     [SerializeField] Sprite _PushSwitchLeft;
     [SerializeField] Sprite _PushSwitchRight;
     [SerializeField] Sprite _PushSwitchCenter;
@@ -24,6 +26,7 @@ public class SwitchLever : MonoBehaviour
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>(); // Cache our sprite renderer
+        SetLeverPosition(_startingDirection, true); // Set default Lever Position
     }
 
     void OnTriggerStay2D(Collider2D collision) // On trigger
@@ -58,9 +61,9 @@ public class SwitchLever : MonoBehaviour
         }
     }
 
-    void SetLeverPosition(LeverDirection direction)
+    void SetLeverPosition(LeverDirection direction, bool setupLever = false) //Optional parameter to set up the starting position
     {
-        if (_currentDirection == direction)
+        if (setupLever == false && _currentDirection == direction)
             return;
 
         switch (direction)
@@ -80,6 +83,27 @@ public class SwitchLever : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void OnValidate()
+    {
+        //_spriteRenderer = GetComponent<SpriteRenderer>(); // Cache our sprite renderer
+
+        switch (_startingDirection)
+        {
+            case LeverDirection.Left:
+                _spriteRenderer.sprite = _PushSwitchLeft;
+                break;
+            case LeverDirection.Center:
+                _spriteRenderer.sprite = _PushSwitchCenter;
+                break;
+            case LeverDirection.Right:
+                _spriteRenderer.sprite = _PushSwitchRight;
+                break;
+            default:
+                break;
+        }
+        Debug.Log(_startingDirection);
     }
 
     public void LogUsingEvent()

@@ -8641,7 +8641,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12.996094
+  orthographic size: 6.73
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -36493,6 +36493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2925949317c3a479e22b8ae1f70961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startingDirection: 1
   _PushSwitchLeft: {fileID: 21300000, guid: c3dd5adbfa0248d4aa5b8958da7a42a1, type: 3}
   _PushSwitchRight: {fileID: 21300000, guid: 65c45ec7f7d918546ba435cb3a3c8ea8, type: 3}
   _PushSwitchCenter: {fileID: 21300000, guid: 3b11b89354014d249946d221fe6607ab, type: 3}
@@ -36552,7 +36553,31 @@ MonoBehaviour:
         m_CallState: 2
   _onCenter:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1840716932}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1280409134}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!212 &1246031116
 SpriteRenderer:
   m_ObjectHideFlags: 0
