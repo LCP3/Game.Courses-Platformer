@@ -43,6 +43,6 @@ public class HittableFromBelow : MonoBehaviour
 
     protected virtual void Use() //protected as we want to modify it for our other classes, virtual lets us override.
     {
-        Debug.Log($"Used {gameObject.name}");
+        //Debug.Log($"Used {gameObject.name}");
     }
 }

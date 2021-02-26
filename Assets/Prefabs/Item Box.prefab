@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _usedSprite: {fileID: 21300000, guid: 8d511868002e2c148bf11f5bd31cf1ed, type: 3}
+  _itemPrefab: {fileID: 0}
   _item: {fileID: 2185458668065419863}
   _itemLaunchVelocity: {x: 3, y: 3}
 --- !u!61 &2185458666899502464

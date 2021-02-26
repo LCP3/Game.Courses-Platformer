@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2185458666899502465, guid: a7084d0f9b7da7d4297c72fd7772c2ed, type: 3}
+      propertyPath: _itemPrefab
+      value: 
+      objectReference: {fileID: 8959262057785360372, guid: e1db8cc4385b56042a82cfe5397f5c52, type: 3}
     - target: {fileID: 2185458666899502467, guid: a7084d0f9b7da7d4297c72fd7772c2ed, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.5547023
@@ -177,6 +181,10 @@ PrefabInstance:
     - target: {fileID: 2185458666899502477, guid: a7084d0f9b7da7d4297c72fd7772c2ed, type: 3}
       propertyPath: m_Name
       value: Item Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 2185458668065419863, guid: a7084d0f9b7da7d4297c72fd7772c2ed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7084d0f9b7da7d4297c72fd7772c2ed, type: 3}
