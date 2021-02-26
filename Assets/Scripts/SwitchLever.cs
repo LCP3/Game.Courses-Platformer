@@ -87,7 +87,7 @@ public class SwitchLever : MonoBehaviour
 
     private void OnValidate()
     {
-        //_spriteRenderer = GetComponent<SpriteRenderer>(); // Cache our sprite renderer
+        _spriteRenderer = GetComponent<SpriteRenderer>(); // Cache our sprite renderer
 
         switch (_startingDirection)
         {
@@ -103,11 +103,5 @@ public class SwitchLever : MonoBehaviour
             default:
                 break;
         }
-        Debug.Log(_startingDirection);
-    }
-
-    public void LogUsingEvent()
-    {
-        Debug.Log("Using Event");
     }
 }
