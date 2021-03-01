@@ -6,13 +6,10 @@ public class UI_StartLevelButton : MonoBehaviour
 {
     [SerializeField] string _levelName;
 
+    public string LevelName => _levelName;  //Public get-only property, expression body syntax equivalent public string LevelName { get { return _levelName; } }
+
     public void LoadLevel()
     {
         SceneManager.LoadScene(_levelName); // Load a level defined in the inspector
-    }
-
-    private void OnValidate()
-    {
-        GetComponentInChildren<TMP_Text>()?.SetText(_levelName); //Set the buttons' text to the level names on validation in the editor.
     }
 }
