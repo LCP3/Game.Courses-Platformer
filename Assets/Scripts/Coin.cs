@@ -16,5 +16,6 @@ public class Coin : MonoBehaviour
 
         gameObject.SetActive(false); //Turn off coin
         CoinsCollected++; //Add to coin counter
+        ScoreSystem.Add(100); //Add 100 points
     }
 }
