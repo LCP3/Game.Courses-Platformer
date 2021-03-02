@@ -26,6 +26,7 @@ public class Flag : MonoBehaviour
 
     IEnumerator LoadLevelAfterDelay()
     {
+        PlayerPrefs.SetInt(_sceneName + "Unlocked", 1);
         yield return new WaitForSeconds(1f); //yield return for IEnumerator return syntax
         //Load new level
         SceneManager.LoadScene(_sceneName);
