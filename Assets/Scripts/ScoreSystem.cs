@@ -2,12 +2,16 @@
 using UnityEngine;
 
 
-public static class ScoreSystem
+public class ScoreSystem : MonoBehaviour
 {
     public static event Action<int> OnScoreChange;
     static int _score;
     static int _highScore;
 
+    private void Start()
+    {
+        _highScore = PlayerPrefs.GetInt("HighScore");
+    }
     public static void Add(int points)
     {
         _score += points;
@@ -19,7 +23,7 @@ public static class ScoreSystem
         {
             _highScore = _score; // Set new high score
 
-            PlayerPrefs.SetInt("highScore", _highScore); // Set a key in PlayerPrefs for a persistent high score.
+            PlayerPrefs.SetInt("HighScore", _highScore); // Set a key in PlayerPrefs for a persistent high score.
         }
     }
 }
