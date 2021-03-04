@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -163,6 +164,7 @@ public class Player : MonoBehaviour
     internal void ResetToStart() //Internal means we can call this method from outside their own script (basically same as public)
     {
         _rigidbody2D.position = _startPosition;
+        SceneManager.LoadScene("Menu");
     }
 
     internal void TeleportTo(Vector3 position)
