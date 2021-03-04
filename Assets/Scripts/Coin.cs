@@ -14,8 +14,12 @@ public class Coin : MonoBehaviour
             return;
         }
 
-        gameObject.SetActive(false); //Turn off coin
         CoinsCollected++; //Add to coin counter
         ScoreSystem.Add(100); //Add 100 points
+
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        GetComponent<AudioSource>().Play();
     }
 }
