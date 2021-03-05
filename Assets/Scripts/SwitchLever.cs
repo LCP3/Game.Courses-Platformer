@@ -48,20 +48,20 @@ public class SwitchLever : MonoBehaviour
 
         // Debug.Log($"Contact at {contactPoint}");
 
-        // if (contactPoint.x > 0) // If the switch is pushed left, from the right side
-        if (wasOnRight && playerWalkingRight)
+        // if (contactPoint.x > 0) // If the switch is pushed right, from left
+        if (wasOnRight == false && playerWalkingRight)
          {
             SetLeverPosition(LeverDirection.Right);
          }
         
-        // if (contactPoint.x < 0) // If pushed right, from left
-        else if (wasOnRight == false && playerWalkingLeft)
+        // if (contactPoint.x < 0) // If pushed left, from right
+        else if (wasOnRight && playerWalkingLeft)
          {
             SetLeverPosition(LeverDirection.Left);
         }
     }
 
-    void SetLeverPosition(LeverDirection direction, bool setupLever = false) //Optional parameter to set up the starting position
+    void SetLeverPosition(LeverDirection direction, bool setupLever = true) //Optional parameter to set up the starting position
     {
         if (setupLever == false && _currentDirection == direction)
             return;
