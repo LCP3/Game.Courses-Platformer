@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031715280036986240}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -15.602675, y: 1.545475, z: 0.15246119}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -113,6 +113,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297dd2341f7eacb4280a697688292adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioClips:
+  - {fileID: 8300000, guid: 69a953b788f0f5743bbd80033bb4eec6, type: 3}
+  - {fileID: 8300000, guid: 87a8d1c0573db744285c5e72ba070b1f, type: 3}
+  - {fileID: 8300000, guid: 22acb2be4ff32b14b919d449d674b348, type: 3}
+  - {fileID: 8300000, guid: 82a6898cbb16ee34bb15867f90abf91e, type: 3}
+  - {fileID: 8300000, guid: d15a1e3ca4e982a479212983c9832884, type: 3}
+  - {fileID: 8300000, guid: 7399722f4b4560e40a498260bf6296e0, type: 3}
+  - {fileID: 8300000, guid: 5226060795d47d04686fea4a9054854d, type: 3}
+  - {fileID: 8300000, guid: c23f28c7be6f9d546a21750c86ba2267, type: 3}
+  - {fileID: 8300000, guid: d2e9af5464584c54386b6f61dfca3acd, type: 3}
+  - {fileID: 8300000, guid: 62246888d2a4e424aa9ba1948bbb988a, type: 3}
 --- !u!82 &2031715280036986251
 AudioSource:
   m_ObjectHideFlags: 0

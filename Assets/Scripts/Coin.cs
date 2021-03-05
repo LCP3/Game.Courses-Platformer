@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
     public static int CoinsCollected; //Static = only one instance of this variable across all game objects
+    public AudioClip[] _audioClips;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,6 +19,12 @@ public class Coin : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;
 
-        GetComponent<AudioSource>().Play();
+        int _randomNum = Random.Range(1, 10);
+        GetComponent<AudioSource>().PlayOneShot(RandomAudioClip());
+    }
+
+    private AudioClip RandomAudioClip()
+    {
+        return _audioClips[Random.Range(0, _audioClips.Length)];
     }
 }
