@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     string _jumpButton;
     string _horizontalAxis;
     int _layerMask;
+    AudioSource _audioSource;
 
     public int PlayerNumber => _playerNum; //Shorthand for getter
 
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
         _jumpButton = $"P{_playerNum}Jump"; //Cache string interpolation for performance
         _horizontalAxis = $"P{_playerNum}Horizontal"; //Performance cache
         _layerMask = LayerMask.GetMask("Default"); //Performance cache
+        _audioSource = GetComponent<AudioSource>(); 
     }
 
     void Update()
@@ -103,6 +105,8 @@ public class Player : MonoBehaviour
         _jumpsRemaining--; //Decrease jump count
         _fallTimer = 0; //Reset the fall timer
         _jumpTimer = 0; //Reset jump timer
+        
+        _audioSource?.Play();
     }
 
     bool ShouldStartJump()

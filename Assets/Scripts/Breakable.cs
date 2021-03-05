@@ -22,6 +22,7 @@ public class Breakable : MonoBehaviour
     {
         var particleSystem = GetComponent<ParticleSystem>(); //Get our particle system
         particleSystem.Play(); //Play bricks breaking
+        GetComponent<AudioSource>().Play(); //Play sfx
 
         GetComponent<Collider2D>().enabled = false; //Turn off collider
         GetComponent<SpriteRenderer>().enabled = false; //Turn off sprite renderer
