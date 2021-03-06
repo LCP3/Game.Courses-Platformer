@@ -1,10 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Key : MonoBehaviour
 {
     [SerializeField] KeyLock _keyLock;
+
+    AudioSource _audioSource;
+
+    private void Awake() => _audioSource = GetComponent<AudioSource>();
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,6 +15,7 @@ public class Key : MonoBehaviour
         {
             transform.SetParent(player.transform);
             transform.localPosition = Vector3.up; // (0,1,0)
+            _audioSource.Play(); //Play sfx
         }
 
         var keyLock = collision.GetComponent<KeyLock>();

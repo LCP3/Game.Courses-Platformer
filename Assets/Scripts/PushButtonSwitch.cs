@@ -8,12 +8,14 @@ public class PushButtonSwitch : MonoBehaviour
     [SerializeField] UnityEvent _onPressed; //On press, we want this event to happen
     [SerializeField] UnityEvent _onReleased; //On release, we want this event to happen
     SpriteRenderer _spriteRenderer;
+    AudioSource _audioSource;
     Sprite _releasedSprite;
     
 
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>(); //Get spriteRenderer -- Cached
+        _audioSource = GetComponent<AudioSource>();
         _releasedSprite = _spriteRenderer.sprite;
 
         BecomeReleased();
@@ -31,6 +33,7 @@ public class PushButtonSwitch : MonoBehaviour
     void BecomePressed()
     {
         _spriteRenderer.sprite = _pressedSprite; //Access sprite property
+        _audioSource.Play();
         _onPressed?.Invoke(); //Call any events for _onPressed
     }
     void OnTriggerExit2D(Collider2D collision)

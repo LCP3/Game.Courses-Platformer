@@ -6,11 +6,13 @@ public class SpringBoard : MonoBehaviour
     [SerializeField] Sprite _downSprite;
 
     SpriteRenderer _spriteRenderer;
+    private AudioSource _audioSource;
     Sprite _upSprite;
 
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();  //Get SpriteRenderer in Awake (cached)
+        _audioSource = GetComponent<AudioSource>(); //Cache
         _upSprite = _spriteRenderer.sprite;
     }
 
@@ -23,6 +25,7 @@ public class SpringBoard : MonoBehaviour
             if (rigidbody2d != null)
             { //In case the player doesn't have a rigidbody2D
                 rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, _bounceVelocity); //Add Y velocity Vector2(x,y)
+                _audioSource.Play();
                 _spriteRenderer.sprite = _downSprite;
             }
         }

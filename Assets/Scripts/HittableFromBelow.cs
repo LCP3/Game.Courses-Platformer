@@ -5,12 +5,15 @@ public class HittableFromBelow : MonoBehaviour
 {
     [SerializeField] protected Sprite _usedSprite; //protected allows use in other files using inheritance -- private in essence
     Animator _animator;
+    private AudioSource _audioSource;
+    [SerializeField] AudioClip _boxNotEmpty;
 
     protected virtual bool CanUse => true; //Virtual property that tells us whether we can use the item (default false) || => shorthand, using a getter
 
     void Awake()
     {
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter2D(Collision2D collision) //On collision
@@ -26,6 +29,7 @@ public class HittableFromBelow : MonoBehaviour
         {
             PlayAnimation();
             Use();
+            _audioSource.PlayOneShot(_boxNotEmpty);
             if (CanUse == false) 
             {
                 GetComponent<SpriteRenderer>().sprite = _usedSprite;

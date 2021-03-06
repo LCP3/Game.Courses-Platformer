@@ -14,6 +14,9 @@ public class SwitchLever : MonoBehaviour
     [SerializeField] UnityEvent _onCenter;
 
     SpriteRenderer _spriteRenderer;
+    AudioSource _audioSource;
+    [SerializeField] AudioClip _audioSourceL;
+    [SerializeField] AudioClip _audioSourceR;
     LeverDirection _currentDirection;
 
     enum LeverDirection
@@ -26,6 +29,7 @@ public class SwitchLever : MonoBehaviour
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>(); // Cache our sprite renderer
+        _audioSource = GetComponent<AudioSource>();
         SetLeverPosition(_startingDirection, true); // Set default Lever Position
     }
 
@@ -61,16 +65,19 @@ public class SwitchLever : MonoBehaviour
         }
     }
 
-    void SetLeverPosition(LeverDirection direction, bool setupLever = true) //Optional parameter to set up the starting position
+    void SetLeverPosition(LeverDirection direction, bool setupLever = false) //Optional parameter to set up the starting position
     {
         if (setupLever == false && _currentDirection == direction)
             return;
 
+        _currentDirection = direction;
         switch (direction)
         {
             case LeverDirection.Left:
                 _spriteRenderer.sprite = _PushSwitchLeft;
                 _onLeft.Invoke();
+                if (_audioSource != null)
+                    _audioSource.PlayOneShot(_audioSourceL);
                 break;
             case LeverDirection.Center:
                 _spriteRenderer.sprite = _PushSwitchCenter;
@@ -79,6 +86,8 @@ public class SwitchLever : MonoBehaviour
             case LeverDirection.Right:
                 _spriteRenderer.sprite = _PushSwitchRight;
                 _onRight.Invoke();
+                if (_audioSource != null)
+                    _audioSource.PlayOneShot(_audioSourceR);
                 break;
             default:
                 break;

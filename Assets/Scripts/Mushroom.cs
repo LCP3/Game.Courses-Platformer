@@ -3,6 +3,12 @@
 public class Mushroom : MonoBehaviour
 {
     [SerializeField] float _bounceVelocity = 10;
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -12,6 +18,7 @@ public class Mushroom : MonoBehaviour
             if (rigidbody2d != null)
             { //In case the player doesn't have a rigidbody2D
                 rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, _bounceVelocity); //Add Y velocity Vector2(x,y)
+                _audioSource.Play(); //Play sfx
             }
         }
     }
