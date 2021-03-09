@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     string _horizontalAxis;
     int _layerMask;
     AudioSource _audioSource;
+    public AudioClip[] _audioClip;
+    private bool _playerLanded;
 
     public int PlayerNumber => _playerNum; //Shorthand for getter
 
@@ -78,13 +80,26 @@ public class Player : MonoBehaviour
         { // If we're grounded
             _fallTimer = 0; //Reset the fall timer
             _jumpsRemaining = _maxJumps; // Reset Jumps
+
+            if (_audioSource.isPlaying || _playerLanded)
+                return;
+            PlayLandingClip();
         }
         else
         { //If we're NOT grounded
             _fallTimer += Time.deltaTime; //Fall down in increasing velocity
             var downForce = _downPull * _fallTimer * _fallTimer; //Set downward force to Serialized Field downForce * _fallTimer^2 (increases gradually, exponentially)
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y - downForce); //Keep X velocity the same, increase downward velocity
+
+            if (_playerLanded && _fallTimer > .1)
+                _playerLanded = false;
         }
+    }
+
+    private void PlayLandingClip()
+    {
+        _audioSource.PlayOneShot(_audioClip[0]);
+        _playerLanded = true;
     }
 
     void ContinueJump()
@@ -158,6 +173,7 @@ public class Player : MonoBehaviour
         if (hit != null) //Check we're grounded, if so
         {
             _isSlipperySurface = hit.CompareTag("Slippery"); //Set Slippery to true
+
         }
         else
         {
