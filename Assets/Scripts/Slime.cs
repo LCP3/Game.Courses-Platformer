@@ -85,11 +85,14 @@ public class Slime : MonoBehaviour
         var spriteRenderer = GetComponent<SpriteRenderer>();
         
         spriteRenderer.sprite = _deadSprite; //Get our sprite renderer and immediately set a property's value.  Only making the call one time.
-        GetComponent<AudioSource>().Play(); // Play death sfx
         GetComponent<Animator>().enabled = false; //Turn off our animation
         GetComponent<Collider2D>().enabled = false; //Turn off our capsule collider (Collider2D is the base class of CapsuleCollider2D)
         this.enabled = false; //Turn off Slime.cs
         GetComponent<Rigidbody2D>().simulated = false; //Turn off our physics.
+
+        var audioSource = GetComponent<AudioSource>(); // Play death sfx, make sure there's an audio source
+        if (audioSource != null)
+            audioSource.Play();
 
         float alpha = 1;
 

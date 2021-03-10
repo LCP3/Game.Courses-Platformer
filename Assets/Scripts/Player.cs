@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
             _fallTimer = 0; //Reset the fall timer
             _jumpsRemaining = _maxJumps; // Reset Jumps
 
-            if (_audioSource.isPlaying || _playerLanded)
+            if (_audioSource.isPlaying || _playerLanded) //If there's a landing sound already playing, or if the player has already landed, exit early
                 return;
             PlayLandingClip();
         }
@@ -91,15 +91,17 @@ public class Player : MonoBehaviour
             var downForce = _downPull * _fallTimer * _fallTimer; //Set downward force to Serialized Field downForce * _fallTimer^2 (increases gradually, exponentially)
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _rigidbody2D.velocity.y - downForce); //Keep X velocity the same, increase downward velocity
 
-            if (_playerLanded && _fallTimer > .1)
-                _playerLanded = false;
+            if (_playerLanded && _fallTimer > .1) //If the player is transitioning from landing to jumping, and has fallen for a short period
+                _playerLanded = false; //Set up to play the landing sfx
         }
     }
 
     private void PlayLandingClip()
     {
-        _audioSource.PlayOneShot(_audioClip[0]);
-        _playerLanded = true;
+        if (_rigidbody2D.velocity.y > 0) //If the player is still moving up, exit early
+            return;
+        _audioSource.PlayOneShot(_audioClip[0]); //Play landing sfx
+        _playerLanded = true; //Reset grounded landed state
     }
 
     void ContinueJump()
