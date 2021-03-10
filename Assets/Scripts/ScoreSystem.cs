@@ -5,12 +5,14 @@ using UnityEngine;
 public class ScoreSystem : MonoBehaviour
 {
     public static event Action<int> OnScoreChange;
+
     static int _score;
     static int _highScore;
 
-    private void Start()
+    void Start()
     {
         _highScore = PlayerPrefs.GetInt("HighScore");
+        _score = 0;
     }
     public static void Add(int points)
     {
