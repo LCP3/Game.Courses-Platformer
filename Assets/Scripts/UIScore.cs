@@ -10,6 +10,7 @@ public class UIScore : MonoBehaviour
     {
         _text = GetComponent<TMP_Text>();
         ScoreSystem.OnScoreChange += UpdateScoreText; //When score changes, update the score text -- event registration
+        UpdateScoreText(ScoreSystem.Score);
     }
 
     void OnDestroy()
