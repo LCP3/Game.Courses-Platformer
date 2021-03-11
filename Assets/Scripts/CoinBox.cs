@@ -18,6 +18,6 @@ public class CoinBox : HittableFromBelow
         base.Use(); //Run the code in the base class (HittableFromBelow)
         _remainingCoins--;        
         Coin.CoinsCollected++;
-        Debug.Log("Added coin");
+        ScoreSystem.Add(100);
     }
 }

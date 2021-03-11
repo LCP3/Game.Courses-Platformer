@@ -1,20 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShootFireball : MonoBehaviour
 {
     [SerializeField] Fireball _fireballPrefab;
+    Player _player;
+    string _fireButton;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        Instantiate(_fireballPrefab, transform.position, Quaternion.identity);
+        _player = GetComponent<Player>();
+        _fireButton = $"P{_player.PlayerNumber}Fire";
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetButtonDown(_fireButton))
+            Instantiate(_fireballPrefab, transform.position, Quaternion.identity);
+
     }
 }
