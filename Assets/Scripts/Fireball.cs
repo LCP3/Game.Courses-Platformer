@@ -3,11 +3,29 @@
 public class Fireball : MonoBehaviour
 {
     [SerializeField] float _launchForce = 5;
+    [SerializeField] float _bounceForce = 5;
 
-    // Start is called before the first frame update
+
+    int _bouncesRemaining = 3;
+    Rigidbody2D _rigidbody;
+
+    public float Direction { get; internal set; }
+
     void Start()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(_launchForce, 0);
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody.velocity = new Vector2(_launchForce * Direction, 0);
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        _bouncesRemaining--;
+        if (_bouncesRemaining < 0)
+        {
+            ShootFireball._fireballCount--; //Decrease the count of fireballs
+            Destroy(gameObject); // Destroy the created object
+        }
+        else
+            _rigidbody.velocity = new Vector2(_launchForce * Direction, _bounceForce); //Maintain velocity
+    }
 }
