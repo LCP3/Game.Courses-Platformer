@@ -18,6 +18,7 @@ public class HittableFromBelow : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision) //On collision
     {
+        Debug.Log("Collision");
         if (CanUse == false) //Check if item is usable
             return;
 

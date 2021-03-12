@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
-public class Slime : MonoBehaviour
+public class Slime : MonoBehaviour, ITakeDamage
 {
     [SerializeField] Transform _leftSensor; // Give our sensors a reference to access the properties
     [SerializeField] Transform _rightSensor;
@@ -31,6 +29,11 @@ public class Slime : MonoBehaviour
         else {
             ScanSensor(_rightSensor);
         }
+    }
+
+    public void TakeDamage()
+    {
+        StartCoroutine(Die());
     }
 
     void ScanSensor(Transform sensor)
@@ -72,7 +75,7 @@ public class Slime : MonoBehaviour
 
         if (normal.y <= -0.5)
         {
-            StartCoroutine(Die());
+            TakeDamage();
         }
         else
         {
