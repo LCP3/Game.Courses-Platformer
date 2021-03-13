@@ -16,6 +16,11 @@ public class Player : MonoBehaviour
     [SerializeField] float _downPull = 5;
     [SerializeField] float _maxJumpDuration = 0.1f;
     [SerializeField] float _wallslideSpeed = 1f;
+    [Header("Acceleration Control")]
+    [SerializeField] float _acceleration = 1f;
+    [SerializeField] float _deceleration = 1f;
+    [SerializeField] float _airAcceleration = 1f;
+    [SerializeField] float _airDeceleration = 1f;
 
 
     Vector3 _startPosition;
@@ -182,10 +187,14 @@ public class Player : MonoBehaviour
 
     void MoveHorizontal()
     {
+        float smoothnessMultiplier = _horizontal == 0 ? _deceleration : _acceleration; //  If _horizontal is 0, use decel, otherwise accel
+        if (_isGrounded == false)
+            smoothnessMultiplier = _horizontal == 0 ? _airDeceleration : _airAcceleration;
+
         float newHorizontal = Mathf.Lerp(//Linear interpolation 
-            _rigidbody2D.velocity.x, //Between two values
-            _horizontal * _speed,
-            Time.deltaTime); //Over a duration, going to our desired velocity
+            _rigidbody2D.velocity.x, //Between two values, current velocity
+            _horizontal * _speed, //Desired velocity
+            Time.deltaTime * smoothnessMultiplier); //Over a duration, multiplied either by decel or accel
         _rigidbody2D.velocity = new Vector2(newHorizontal, _rigidbody2D.velocity.y);
     }
 
