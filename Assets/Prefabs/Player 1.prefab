@@ -135,7 +135,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 07477f0d1276c7e41ad5de058c5d9140, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireballPrefab: {fileID: 8932866774184096608, guid: 550097536abd4a04283d66e038cde061, type: 3}
+  _fireRate: 0.25
 --- !u!95 &5243082724492782216
 Animator:
   serializedVersion: 3

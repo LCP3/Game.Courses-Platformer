@@ -11,8 +11,11 @@ public class Player : MonoBehaviour
     [SerializeField] float _jumpVelocity = 10;
     [SerializeField] int _maxJumps = 2;
     [SerializeField] Transform _feet;
+    [SerializeField] Transform _leftSensor;
+    [SerializeField] Transform _rightSensor;
     [SerializeField] float _downPull = 5;
     [SerializeField] float _maxJumpDuration = 0.1f;
+    [SerializeField] float _wallslideSpeed = 1f;
 
 
     Vector3 _startPosition;
@@ -65,6 +68,12 @@ public class Player : MonoBehaviour
         UpdateAnimator();
         UpdateSpriteDirection();
 
+        if (ShouldSlide())
+        {
+            Slide();
+            _jumpsRemaining = 1; //Jump after wallslide
+            return;
+        }
         if (ShouldStartJump())
         {
             Jump();
@@ -94,6 +103,35 @@ public class Player : MonoBehaviour
             if (_playerLanded && _fallTimer > .1) //If the player is transitioning from landing to jumping, and has fallen for a short period
                 _playerLanded = false; //Set up to play the landing sfx
         }
+    }
+
+    void Slide()
+    {
+        _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, -_wallslideSpeed);
+    }
+
+    bool ShouldSlide()
+    {
+        if (_isGrounded)
+            return false;
+
+        if (_horizontal < 0) // If pushing to the left
+        {
+            var hit = Physics2D.OverlapCircle(_leftSensor.position, 0.1f);
+
+            if (hit != null && hit.CompareTag("Wall"))
+                return true;
+        }
+
+        if (_horizontal > 0) // If pushing to the right
+        {
+            var hit = Physics2D.OverlapCircle(_rightSensor.position, 0.1f);
+
+            if (hit != null && hit.CompareTag("Wall"))
+                return true;
+        }
+
+        return false;
     }
 
     private void PlayLandingClip()
@@ -165,6 +203,8 @@ public class Player : MonoBehaviour
         bool walking = _horizontal != 0; //If our horizontal speed isn't 0
         _animator.SetBool("Walk", walking); // Walk
         _animator.SetBool("Jump", ShouldContinueJump());
+        _animator.SetBool("Wallslide", ShouldSlide());
+
     }
 
     void UpdateIsGrounded()
