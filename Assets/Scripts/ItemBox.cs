@@ -28,7 +28,7 @@ public class ItemBox : HittableFromBelow
         if (_item == null)
             return;
 
-        base.Use();
+        //base.Use(); -- changed Use() to abstract, therefore no base implementation in the class
 
         _isEmpty = true;
         _item.SetActive(true);

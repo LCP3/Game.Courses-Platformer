@@ -15,7 +15,7 @@ public class CoinBox : HittableFromBelow
 
     protected override void Use()
     {
-        base.Use(); //Run the code in the base class (HittableFromBelow)
+        //base.Use(); //Run the code in the base class (HittableFromBelow)
         _remainingCoins--;        
         Coin.CoinsCollected++;
         ScoreSystem.Add(100);

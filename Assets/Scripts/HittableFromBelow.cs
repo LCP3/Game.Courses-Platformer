@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class HittableFromBelow : MonoBehaviour
+public abstract class HittableFromBelow : MonoBehaviour
 {
     [SerializeField] protected Sprite _usedSprite; //protected allows use in other files using inheritance -- private in essence
     Animator _animator;
@@ -46,8 +46,8 @@ public class HittableFromBelow : MonoBehaviour
         }
     }
 
-    protected virtual void Use() //protected as we want to modify it for our other classes, virtual lets us override.
-    {
+    protected abstract void Use(); //protected as we want to modify/access it for our other classes, virtual lets us override/update, abstract at a method level requires the use of this method by subclasses.
+    /*{
         //Debug.Log($"Used {gameObject.name}");
-    }
+    }*/
 }
